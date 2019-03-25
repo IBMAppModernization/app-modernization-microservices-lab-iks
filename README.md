@@ -33,7 +33,7 @@ The **stock-quote** service queries an external service to get real time stock q
 
 ## Setup
 
-1. If following this lab as part of an IBM instructor led workshop, please follow these instructions to setup your workshop environment: [https://gist.github.com/jzaccone/0cdc321e5dc8adb0dca98ca861284c01](https://gist.github.com/jzaccone/0cdc321e5dc8adb0dca98ca861284c01)
+1. If following this lab as part of an IBM instructor led workshop, please follow these instructions to setup your workshop environment: [https://gist.github.com/djccarew/83da0dca62dbc4951efddbe1f49105ca](https://gist.github.com/djccarew/83da0dca62dbc4951efddbe1f49105ca)
 
 2. Initialize Helm client
 ```
@@ -64,9 +64,9 @@ Like a typical  Kubernetes app, Stock Trader use secrets and ConfigMaps to store
 3. Verify that the output looks something like the following:
 ```
   Script being run from correct folder
-  Using user01-cluster as IKS cluster name ...
-  Getting Ingress subdomain for cluster user01-cluster  ...
-  Updating Helm chart with ingress subdomain : user01-cluster.us-east.containers.appdomain.cloud
+  Using user001-cluster as IKS cluster name ...
+  Getting Ingress subdomain for cluster user001-cluster  ...
+  Updating Helm chart with ingress subdomain : user001-cluster.us-east.containers.appdomain.cloud
   Setup completed successfully
 ```
 
@@ -164,15 +164,15 @@ tradr-558f6b84b5-82pj8                      1/1       Running   0          1m
 ```
 6. Verify the output looks something like the following. The value in the  HOSTS column is the hostname part of the URL that you'll use to access the microservices that have an external interface.
 ```
-NAME                  HOSTS                                               ADDRESS          PORTS     AGE
-stocktrader-ingress   user01-cluster.us-east.containers.appdomain.cloud   169.61.102.110   80        15m
+NAME                  HOSTS                                                ADDRESS          PORTS     AGE
+stocktrader-ingress   user001-cluster.us-east.containers.appdomain.cloud   169.61.102.110   80        15m
 ```
 
 ## Step 4: Test the app
 
 In this part you'll verify that the various microservices are working as designed.
 
-1. Bring up the web application using the Ingress hostname you noted at the end of the  previous  section and appending the path `/tradr` to it. So for example if your Ingress hostname is `user49-cluster.us-east.containers.appdomain.cloud` then the URL will be `http://user49-cluster.us-east.containers.appdomain.cloud/tradr`
+1. Bring up the web application using the Ingress hostname you noted at the end of the  previous  section and appending the path `/tradr` to it. So for example if your Ingress hostname is `user049-cluster.us-east.containers.appdomain.cloud` then the URL will be `http://user049-cluster.us-east.containers.appdomain.cloud/tradr`
 
 ![Login page](images/ss1.png)
 
@@ -199,7 +199,7 @@ In this part you'll verify that the various microservices are working as designe
 
 ![Feedback](images/ss5.png)
 
-8. Verify that the data flow of `portfolio->Kafka->event-consumer->trade-history-Mongo` works by querying the **trade-history*** service via an endpoint  that makes it do a Mongo query.  Add the path `/trade-history/trades/Client2` to the Ingress hostname. For example `http://user49-cluster.us-east.containers.appdomain.cloud/trade-history/trades/Client2` for an Ingress hostname that starts with `user49`.
+8. Verify that the data flow of `portfolio->Kafka->event-consumer->trade-history-Mongo` works by querying the **trade-history*** service via an endpoint  that makes it do a Mongo query.  Add the path `/trade-history/trades/Client2` to the Ingress hostname. For example `http://user049-cluster.us-east.containers.appdomain.cloud/trade-history/trades/Client2` for an Ingress hostname that starts with `user049`.
 
 9. Enter the URL in another browser tab and verify that the history has captured  all the  trades you did while testing. A partial screen shot of what you should get back is shown below:
 
