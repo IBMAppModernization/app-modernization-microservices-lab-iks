@@ -60,7 +60,7 @@ Like a typical  Kubernetes app, Stock Trader use secrets and ConfigMaps to store
    cd scripts   
 
    # SETUPPARAMETER environment variable was prepared in the previous steps
-   ./setupLab.sh $SETUPPARAMETER
+   ./setupLab.sh $SETUPURL
    ```
 
 3. Verify that the output looks something like the following:
