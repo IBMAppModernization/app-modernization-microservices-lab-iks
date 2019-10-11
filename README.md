@@ -46,10 +46,9 @@ Like a typical  Kubernetes app, Stock Trader use secrets and ConfigMaps to store
 
 
 1. From a terminal window clone the Github repo that has everything needed to deploy the aggregated Stock Trader app.
-
-   ```
-   git clone https://github.com/IBMStockTraderLite/stocktrader.git
-   cd stocktrader
+```
+   git clone https://github.com/IBMStockTraderLite/stocktrader-iks.git
+   cd stocktrader-iks
 
    ```
 
@@ -119,7 +118,7 @@ In this part  you'll install the prereqs step by step before installing the Stoc
    ```
    kubectl get pods
    ```
-   
+
 ...The output should show pods for MariaDB and Mongo and they both should be running and in the READY state
 
    ```
