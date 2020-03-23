@@ -1,8 +1,8 @@
 # Deploying and testing a microservices application in Kubernetes
 
-In this lab you will deploy and test the *IBM Stock Trader V2.0* application in the IBM Cloud Kubernetes Service.
+In this lab you will deploy and test the *IBM Stock Trader Lite V2.0* application in the IBM Cloud Kubernetes Service.
 
-The *IBM Stock Trader V2.0*  application is a polyglot  stock trading sample, where you can create various stock portfolios and add shares of stock to each for a commission. It keeps track of each porfolio’s total value and its loyalty level, which affect the commission charged per transaction. It also lets you submit feedback on the application, which can result in earning free (zero commission) trades, based on the tone of the feedback. (Tone is determined by calling the Watson Tone Analyzer).
+The *IBM Stock Trader Lite V2.0*  application is a polyglot  stock trading sample, where you can create various stock portfolios and add shares of stock to each for a commission. It keeps track of each porfolio’s total value and its loyalty level, which affect the commission charged per transaction. It also lets you submit feedback on the application, which can result in earning free (zero commission) trades, based on the tone of the feedback. (Tone is determined by calling the Watson Tone Analyzer).
 
 The architecture of the  app is shown below:
 
@@ -14,10 +14,10 @@ The architecture of the  app is shown below:
 
 * The **portfolio** microservice is a Spring Boot application that  sits at the center of the Stcok Trader V2.0 app. This microservice:
 
-   * persists trade data  using JDBC to a MariaDB database
+   * persists trade data using JDBC to a MariaDB database
    * invokes the **stock-quote** service to get stock quotes
-   * sends completed transactions to a local DNS proxy to IBM Event Streams running in the IBM Cloud.
-   * calls the **trade-history** service to get aggregated historical trade data.
+   * sends completed transactions to a local DNS proxy to IBM Event Streams running in the IBM Cloud
+   * calls the **trade-history** service to get aggregated historical trade data
 
 * The **event-consumer** microservice is a POJO application that receives the transaction data from  Event Streams and calls the  **trade-history** service to publish the data to the reporting database.
 
@@ -32,7 +32,7 @@ This lab is broken up into the following steps:
 
 1. [Install all the prerequisites](#step-3-install-all-the-prerequisites)
 
-1. [Install the StockTrader app](#step-4-install-the-stocktrader-app)
+1. [Install the Stock Trader Lite app](#step-4-install-the-stock-trader-lite-app)
 
 1. [Test the app](#step-5-test-the-app)
 
@@ -45,13 +45,13 @@ This lab is broken up into the following steps:
 
 1.1 Verify command line access to your cluster by entering the following command from  web based terminal you're using for the labs. Substitute you cluster name for *CLUSTER_NAME*
 
-   ```
-   ibmcloud cs cluster get [CLUSTER_NAME]
-   ```   
+  ```
+  ibmcloud cs cluster get [CLUSTER_NAME]
+  ```   
 
   You should get output that looks looks something like the following:
 
-  ```
+```
 Retrieving cluster user001-cluster...
 OK
 
@@ -77,9 +77,9 @@ Owner:                          -
 Monitoring Dashboard:           -
 Resource Group ID:              2a926a9173174d94a6eb13284e089f88
 Resource Group Name:            default
-  ```
+```
 
-1.2 Verify you have Helm V3.1  by entering the following command from  web based terminal you're using for the labs
+1.2 Verify you have Helm V3.1 by entering the following command from  web based terminal you're using for the labs
 
   ```
   helm version
@@ -165,13 +165,13 @@ In this part  you'll install the prereqs step by step before installing the Stoc
 
  ```
 
-3.6 Verify your progress so far. Run the following to see the pods you have so far
+3.6 Verify your progress so far. Run the following to see the running pods:
 
  ```
  kubectl get pods
  ```
 
-   The output should show  the 2 database  pods which should be running and in the **READY** state.
+The output should show  the 2 database  pods which should be running and in the **READY** state.
 
  ```
  NAME                            READY   STATUS    RESTARTS   AGE
@@ -181,11 +181,11 @@ stocktrader-hist-postgresql-0   1/1     Running   0          57s
 
 3.7 Next look at your services
 
-   ```
-   kubectl get svc
-   ```
+ ```
+ kubectl get svc
+ ```
 
-3.9 Verify that the output includes services for PostgreSQL, MariaDB and your DNS proxy to Kafka
+3.9 Verify that the output includes services for MariaDB, PostgreSQL and your DNS proxy to Kafka
 
 ```
 NAME                                   TYPE           CLUSTER-IP      EXTERNAL-IP  
@@ -196,19 +196,19 @@ stocktrader-pubsub-kafka-dns-proxy     ExternalName   <none>          broker-0-0
 
 ###  Step 4: Install the Stock Trader app
 
-In this part  you'll install all the Stock Trader microservices using a Helm chart that has templates for all the microservices. Note that all the  microservices require some of the information stored via secrets in the scripts you ran in the previous section.
+In this part you'll install all the Stock Trader Lite V2.0  microservices using a Helm chart that has templates for all the microservices. Note that  the  microservices require  the information stored via secrets in the scripts you ran in the previous section.
 
 4.1  Go back to the top level folder of the  cloned repo
 
-   ```
-   cd ..
-   ```
+ ```
+ cd ..
+ ```
 
 4.2 Install the Helm chart. Verify that no errors are displayed
 
-   ```
-   helm install stocktrader stocktrader
-   ```
+ ```
+ helm install stocktrader stocktrader
+ ```
 4.3 The output of the helm command should look something like the following:
 
 ```
@@ -219,20 +219,20 @@ STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 NOTES:
-Stocktrader Lite V2.0 is deployed.
+Stock Trader Lite V2.0 is deployed.
 
 The Tradr web application is available at:
   http://user001-5290c8c8e5797924dc1ad5d1b85b37c0-0000.us-east.containers.appdomain.cloud/tradr
 
-This is the base  URL for the Trade History Service:
+This is the base  external URL for the Trade History Service:
      http://user001-5290c8c8e5797924dc1ad5d1b85b37c0-0000.us-east.containers.appdomain.cloud/trade-history
 ```
 
 4.4 Verify that all the pods are running by running the following command. Note you may have to run this command multiple times before all the pods become READY.
 
-   ```
-   kubectl get pods
-   ```
+ ```
+ kubectl get pods
+ ```
 
 4.5 Keep running the command until the output looks something like the following. NOTE: It can take 30 seconds  or more for all the pods to reach the **READY** state.
 
@@ -247,7 +247,7 @@ trade-history-59cbc8fb59-8p26d            1/1     Running   0          89s
 tradr-7fcd7c4bdf-5td8h                    1/1     Running   0          89s  
 ```
 
-## Step 5: Test the app
+### Step 5: Test the app
 
 In this part you'll verify that the various microservices are working as designed.
 
@@ -267,29 +267,29 @@ In this part you'll verify that the various microservices are working as designe
    password: trader
    ```
 
-   ![Dashboard](images/ss2.png)
+5.4 Click **Add Client** and fill in the requested values to create a new client.  Click **Save**
 
-5.4 Click **Add Client** and fill in the requested values to create a new client.  Click **OK**
-
-  ![Dashboard](images/ss3.png)
+  ![New client](images/ss2.png)
 
 5.5  Click on the link in the **Portfolio ID** column to see the  details of the new client.
+
+  ![Client details(images/ss3.png)
 
 5.6 Do 3 or 4 "Buy" operations with different stocks.
 
   ![Dashboard](images/ss4.png)
 
-5.7 Sell part of one of the holdings you just bought and verify that the table is updated appropriately
+5.7 Sell part of one of the holdings you just bought and verify that the **Shares** column in the table is updated appropriately.
 
-5.8 Click on **Feedback** and submit some client feedback to be analyzed by Watson Tome Analyzer. Try to sound as angry as possible with the feedback. The app will award 3 free trades for very angry feedback and 1 free trade for feedback that is not so  angry.
+5.8 Click on **Feedback** and submit some client feedback to be analyzed by Watson Tome Analyzer. Try to sound as angry as possible with the feedback. The app will award 3 free trades for very angry feedback and 1 free trade for feedback that is only slightly angry or not angry at all.
 
   ![Feedback](images/ss5.png)
 
 5.9  Verify that the following data flow:
 
-  **Portfolio Svc--->Kafka--->Event-Consumer-Svc--->Trade-History-Svc--->PostgreSQL**
+  **Portfolio Svc--->Kafka--->Event-Consumer-Svc--->Trade-History-Svc--->PostgreSQL(Trade History DB)**
 
-  works by querying the **trade-history*** service for all trades in a portfolio.
+  works by querying the **trade-history** service for all trades in a portfolio.
 
   Run the following command to get the base external URL of the Trade History Service:
 
@@ -299,15 +299,15 @@ In this part you'll verify that the various microservices are working as designe
 
 5.10 Copy the URL into a new browser tab and append the path `/trades/1000` to it. For example if the URL  is `http://user049-cluster.us-east.containers.appdomain.cloud/trade-history/` then the full URL will be `http://user049-cluster.us-east.containers.appdomain.cloud/trade-history/trades/1000`
 
-5.11 Verify that the returned output is in JSON format and that the history has captured  all the  trades you did while testing. A screenshot of the kind of the data that should be returned is shown below.
+5.11 Verify that the returned output is in JSON format and that the history has captured  all the trades you did while testing. A screenshot of the kind of the data that should be returned is shown below.
 
   ![Trade History](images/ss6.png)
 
-## Cleanup
+### Step 6: Cleanup
 
 Free up resources for subsequent labs by deleting the Stock Trader app.
 
-1. Run the following commands to cleanup (note: you can copy all the commands at once and post then into your command window)
+6.1 Run the following commands to cleanup (note: you can copy all the commands at once and post then into your command window)
 
    ```
    cd scripts
@@ -321,5 +321,5 @@ Free up resources for subsequent labs by deleting the Stock Trader app.
    ```
 
 
-## Summary
-You installed and then tested the  Stock Trader microservices sample application and got some insight into the challenges of deploying microservices apps in a Kubernetes cluster.
+### Summary
+You installed and then tested the  Stock Trader Lite V2.0  microservices sample application and got some insight into the challenges of deploying microservices apps in a Kubernetes cluster.
