@@ -101,25 +101,31 @@ Resource Group Name:            default
 
 Like a typical  Kubernetes app, Stock Trader use secrets and ConfigMaps to store information needed by one  or more microservices to access external services and other microservices. We've  provided that info in a file hosted in Cloud Storage and there is a script that you'll use to retrieve it.
 
-2.1 From a terminal window clone the Github repo that has everything needed to deploy the aggregated Stock Trader app.
+2.1 From your web terminal window add the public Helm repo that contains the Helm  charts for  MariaDB and PostgreSQL.
+
+  ```
+  helm repo add bitnami  https://charts.bitnami.com/bitnami
+  ```
+
+2.2 From your web  terminal window clone the Github repo that has everything needed to deploy the aggregated Stock Trader app.
 
   ```
   git clone https://github.com/IBMStockTraderLite/stocktrader-iks.git
   ```
 
-2.2 Go to the directory required to run the setup scripts
+2.3 Go to the directory required to run the setup scripts
 
   ```
   cd stocktrader-iks/scripts
   ```
 
-2.3 Retrieve credentials and other details needed to create secrets and/or ConfigMaps. Ask you instructor for the **SETUPURL** for the command below.
+2.4 Retrieve credentials and other details needed to create secrets and/or ConfigMaps. Ask you instructor for the **SETUPURL** for the command below.
 
   ```
   ./setupLab.sh SETUPURL
   ```
 
-2.4 Verify that the output looks something like the following:
+2.5 Verify that the output looks something like the following:
 
 ```
 Script being run from correct folder
@@ -132,7 +138,7 @@ Updating variables.sh with Kafka topic : stocktrader-user001
 Setup completed successfully
 ```
 
-2.5  Also verify that there is now a file called **variables.sh** in the current folder
+2.6  Also verify that there is now a file called **variables.sh** in the current folder
 
 ## Step 3: Install all the prerequisites
 
