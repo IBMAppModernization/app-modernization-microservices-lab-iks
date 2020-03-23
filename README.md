@@ -194,7 +194,7 @@ stocktrader-hist-postgresql            ClusterIP      172.21.235.35   <none>
 stocktrader-pubsub-kafka-dns-proxy     ExternalName   <none>          broker-0-0mqz41lc21pr467x.kafka.svc01.us-south.eventstreams.cloud.ibm.com
 ```
 
-###  Step 4: Install the Stock Trader app
+###  Step 4: Install the Stock Trader Lite app
 
 In this part you'll install all the Stock Trader Lite V2.0  microservices using a Helm chart that has templates for all the microservices. Note that  the  microservices require  the information stored via secrets in the scripts you ran in the previous section.
 
@@ -273,7 +273,7 @@ In this part you'll verify that the various microservices are working as designe
 
 5.5  Click on the link in the **Portfolio ID** column to see the  details of the new client.
 
-  ![Client details(images/ss3.png)
+  ![Client details](images/ss3.png)
 
 5.6 Do 3 or 4 "Buy" operations with different stocks.
 
