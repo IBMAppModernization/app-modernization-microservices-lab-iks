@@ -90,6 +90,13 @@ Resource Group Name:            default
   version.BuildInfo{Version:"v3.1.1", GitCommit:"afe70585407b420d0097d07b21c47dc511525ac8", GitTreeState:"clean", GoVersion:"go1.13.8"}
   ```
 
+1.3 **USERNAME** or **STUDENTID** env var set in your web based terminal. Ask your instructor for the correct setting for these variables if both of the following commands  return empty values:
+
+  ```
+  echo $USERNAME
+  echo $STUDENTID
+  ```
+
 ###  Step 2: Prepare for installation
 
 Like a typical  Kubernetes app, Stock Trader use secrets and ConfigMaps to store information needed by one  or more microservices to access external services and other microservices. We've  provided that info in a file hosted in Cloud Storage and there is a script that you'll use to retrieve it.
