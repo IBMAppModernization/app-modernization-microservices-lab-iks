@@ -123,7 +123,7 @@ Like a typical  Kubernetes app, Stock Trader use secrets and ConfigMaps to store
 
 ```
 Script being run from correct folder
-Using duser001-cluster as IKS cluster name
+Using user001-cluster as IKS cluster name
 Using stocktrader-user001 as Kakfa Topic name
 Validating setup URL ...
 Getting Ingress subdomain for cluster user001-cluster  ...
@@ -232,7 +232,7 @@ The Tradr web application is available at:
   http://user001-5290c8c8e5797924dc1ad5d1b85b37c0-0000.us-east.containers.appdomain.cloud/tradr
 
 This is the base  external URL for the Trade History Service:
-     http://user001-5290c8c8e5797924dc1ad5d1b85b37c0-0000.us-east.containers.appdomain.cloud/trade-history
+  http://user001-5290c8c8e5797924dc1ad5d1b85b37c0-0000.us-east.containers.appdomain.cloud/trade-history
 ```
 
 4.4 Verify that all the pods are running by running the following command. Note you may have to run this command multiple times before all the pods become READY.
@@ -252,6 +252,28 @@ stocktrader-db-mariadb-0                  1/1     Running   0          12m
 stocktrader-hist-postgresql-0             1/1     Running   0          12m
 trade-history-59cbc8fb59-8p26d            1/1     Running   0          89s
 tradr-7fcd7c4bdf-5td8h                    1/1     Running   0          89s  
+```
+
+4.6 Look at the services available to be called  outside of the cluster by running the following command:
+
+ ```
+ kubectl describe ingress stocktrader-ingress
+ ```
+ The output should look like the following indicating that only the **tradr** web app and the **trade-history** service are configured to be accessed from outside your cluster. All the other services are configured to be accessed from within the cluster only.
+
+ ```
+ Name:             stocktrader-ingress
+Namespace:        default
+Address:          169.63.109.34
+Default backend:  default-http-backend:80 (<none>)
+Rules:
+  Host                                          Path             Backends
+  ----                                          ----             --------
+  user001-cluster...cloud
+                                                /tradr           tradr-service:3000 (172.30.170.91:3000)
+                                                /trade-history   trade-historyservice:5000 (172.30.170.92:5000)
+Annotations:
+Events:  <none>
 ```
 
 ### Step 5: Test the app
