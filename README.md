@@ -97,6 +97,12 @@ Resource Group Name:            default
   echo $STUDENTID
   ```
 
+1.4 **SETUPURL** env var set in your web based terminal. Ask your instructor for the correct setting for this variables if the following command  returns an  empty value:
+
+  ```
+  echo $SETUPURL
+  ```
+
 ###  Step 2: Prepare for installation
 
 Like a typical  Kubernetes app, Stock Trader use secrets and ConfigMaps to store information needed by one  or more microservices to access external services and other microservices. We've  provided that info in a file hosted in Cloud Storage and there is a script that you'll use to retrieve it.
@@ -122,7 +128,7 @@ Like a typical  Kubernetes app, Stock Trader use secrets and ConfigMaps to store
 2.4 Retrieve credentials and other details needed to create secrets and/or ConfigMaps. Ask you instructor for the **SETUPURL** for the command below.
 
   ```
-  ./setupLab.sh SETUPURL
+  ./setupLab.sh $SETUPURL
   ```
 
 2.5 Verify that the output looks something like the following:
@@ -350,7 +356,7 @@ Free up resources for subsequent labs by deleting the Stock Trader app.
    ./cleanupWatson.sh
    ./cleanupAPIConnect.sh
    ./cleanupKafka.sh
-   ./cleanupMongo.sh
+   ./cleanupPostgreSQL.sh
    ./cleanupMariaDB.sh
    cd -
    ```
