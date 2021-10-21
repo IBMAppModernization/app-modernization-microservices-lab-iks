@@ -79,6 +79,11 @@ Resource Group ID:              2a926a9173174d94a6eb13284e089f88
 Resource Group Name:            default
 ```
 
+Point to your cluster by running
+```
+ibmcloud ks cluster config --cluster [cluster name]
+```
+
 1.2 Verify you have Helm V3.1 by entering the following command from  web based terminal you're using for the labs
 
   ```
@@ -89,6 +94,12 @@ Resource Group Name:            default
   ```
   version.BuildInfo{Version:"v3.1.1", GitCommit:"afe70585407b420d0097d07b21c47dc511525ac8", GitTreeState:"clean", GoVersion:"go1.13.8"}
   ```
+
+If you don't have version 3, set an alias
+  ```
+  alias helm=helm3
+  ``` 
+
 
 1.3 **USERNAME** or **STUDENTID** env var set in your web based terminal. Ask your instructor for the correct setting for these variables if both of the following commands  return empty values:
 
