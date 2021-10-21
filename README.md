@@ -97,7 +97,7 @@ ibmcloud ks cluster config --cluster [cluster name]
 
 If you don't have version 3, set an alias
   ```
-  alias helm=helm3
+  alias helm="helm3"
   ``` 
 
 
